@@ -171,7 +171,6 @@ def write_examples(job_id, args):
   example_writer = ExampleWriter(
       job_id=job_id,
       vocab_file=args.vocab_file,
-      spm_model_file=args.spm_model_file,
       output_dir=args.output_dir,
       max_seq_length=args.max_seq_length,
       num_jobs=args.num_processes,
@@ -204,8 +203,6 @@ def main():
                       help="Location of pre-training text files.")
   parser.add_argument("--vocab-file", required=True,
                       help="Location of vocabulary file.")
-  parser.add_argument("--spm_model_file", required=True,
-                      help="directory path of the spm model")
   parser.add_argument("--output-dir", required=True,
                       help="Where to write out the tfrecords.")
   parser.add_argument("--max-seq-length", default=128, type=int,
