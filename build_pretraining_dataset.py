@@ -121,8 +121,11 @@ class ExampleWriter(object):
                num_jobs, blanks_separate_docs, do_lower_case,
                num_out_files=1000, strip_accents=True):
     self._blanks_separate_docs = blanks_separate_docs
+    
+    #passing spm model file https://github.com/pohanchi/ALBert-tf/issues/1
     tokenizer = tokenization.FullTokenizer(
         vocab_file=vocab_file,
+        spm_model_path=spm_model_path,
         do_lower_case=do_lower_case,
         strip_accents=strip_accents)
     self._example_builder = ExampleBuilder(tokenizer, max_seq_length)
@@ -168,6 +171,7 @@ def write_examples(job_id, args):
   example_writer = ExampleWriter(
       job_id=job_id,
       vocab_file=args.vocab_file,
+      spm_model_path=args.spm_model_path,
       output_dir=args.output_dir,
       max_seq_length=args.max_seq_length,
       num_jobs=args.num_processes,
@@ -200,6 +204,8 @@ def main():
                       help="Location of pre-training text files.")
   parser.add_argument("--vocab-file", required=True,
                       help="Location of vocabulary file.")
+  parser.add_argument("--spm_model_path", required=True,
+                      help="directory path of the spm model")
   parser.add_argument("--output-dir", required=True,
                       help="Where to write out the tfrecords.")
   parser.add_argument("--max-seq-length", default=128, type=int,
@@ -208,6 +214,7 @@ def main():
                       help="Parallelize across multiple processes.")
   parser.add_argument("--blanks-separate-docs", default=True, type=bool,
                       help="Whether blank lines indicate document boundaries.")
+  
 
   # toggle lower-case
   parser.add_argument("--do-lower-case", dest='do_lower_case',
