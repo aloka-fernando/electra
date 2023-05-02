@@ -125,7 +125,6 @@ class ExampleWriter(object):
     #passing spm model file https://github.com/pohanchi/ALBert-tf/issues/1
     tokenizer = tokenization.FullTokenizer(
         vocab_file=vocab_file,
-        spm_model_path=spm_model_path,
         do_lower_case=do_lower_case,
         strip_accents=strip_accents)
     self._example_builder = ExampleBuilder(tokenizer, max_seq_length)
